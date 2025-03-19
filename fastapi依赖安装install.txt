@@ -1,0 +1,8 @@
+#在pycharm Terminal 控制台中输入以下命令，安装相应的包
+pip install "fastapi[all]"
+pip install python-multipart
+pip install "python-jose[cryptography]"
+pip install "passlib[bcrypt]"
+pip install sqlalchemy
+pip install 'fastapi-users[sqlalchemy]'
+pip install aiosqlite
