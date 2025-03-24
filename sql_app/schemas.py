@@ -155,11 +155,10 @@ class ItemDetail(Item):
 
 
 class StarBase(BaseModel):
-    uuid: str
     item_id: int
+    uuid: str
     item_title: str
     star_time: datetime.datetime
-
 class StarCreate(StarBase):
     pass
 

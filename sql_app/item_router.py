@@ -103,6 +103,17 @@ def find_items_users_star(
 
     return bool(star_record)
 
+@app.get("/stars/uuid")
+def find_stars_uuid(uuid: str, db: Session = Depends(get_db)):
+    # 查询所有匹配的 Star 记录
+    star_records = db.query(models.Star).filter(
+        models.Star.uuid == uuid
+    ).all()  # 使用 .all() 返回所有记录
+
+    if not star_records:
+        raise HTTPException(status_code=404, detail="未找到相关记录")
+
+    return star_records
 
 
 @app.get("/items/users/{user_uuid}", response_model=list[schemas.Item])
@@ -188,9 +199,9 @@ async def add_modify_star(
     item_id: int,
     uuid: str,
     item_title: str,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-
+    print(f"item_id: {item_id}, uuid: {uuid}, item_title: {item_title}")
     star_status = find_items_users_star(item_id, uuid, db)
     if star_status:
         print(star_status)
@@ -199,8 +210,8 @@ async def add_modify_star(
 
     star_time = datetime.now()
     new_star = models.Star(
-        uuid=uuid,
         item_id=item_id,
+        uuid=uuid,
         item_title=item_title,
         star_time=star_time
     )
