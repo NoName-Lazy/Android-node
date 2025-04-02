@@ -399,3 +399,17 @@ async def delete_comment(comment_id:int,
         return {'ack':f'Comment {comment_id} deleted'}
     except Exception as e:
         raise HTTPException(status_code=500,detail=str(e))
+
+@app.post("/comment-image", response_model=schemas.CommentImage)
+async def add_commentimage(file: UploadFile, content: str, db: Session = Depends(get_db)):
+    print(f"imageurl: {file}, content: {content}")
+
+    new_commentimage = models.CommentImage(
+        imageurl=await uploadImageFile(file),
+        content=content
+    )
+    db.add(new_commentimage)
+    db.commit()
+    db.refresh(new_commentimage)
+
+    return new_commentimage

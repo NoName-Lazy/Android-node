@@ -103,6 +103,7 @@ class Comment(Base):
     owner_id = Column(String, ForeignKey("users.uuid"))
     owner=relationship("User",back_populates="comments")
     create_time=Column(DateTime)
+
     def to_my_dict(self):
         # return my_model_dump(self, self, exclude=("item"))
         return my_model_dump(self, self)#数据字段里的relation字段不在__table__.columns里，所以不会被返回，因此不需要exclude参数
@@ -120,3 +121,10 @@ class Star(Base):
     item_id = Column(Integer, ForeignKey("items.id"))  # 外键，关联 items.id
     item_title = Column(String)  # 文章标题
     star_time = Column(DateTime)  # 点赞时间
+
+class CommentImage(Base):
+    __tablename__ = "commentimages"
+
+    id = Column(Integer, primary_key=True)
+    imageurl = Column(String)
+    content = Column(String, ForeignKey("comments.content"))

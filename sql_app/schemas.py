@@ -154,6 +154,7 @@ class ItemDetail(Item):
         from_attributes = True
 
 
+
 class StarBase(BaseModel):
     item_id: int
     uuid: str
@@ -167,3 +168,13 @@ class Star(StarBase):
 
     class Config:
         from_attributes = True  # 允许从 ORM 对象转换
+
+class CommentImageBase(BaseModel):
+    imageurl:str
+    content:str
+class CommentImageCreate(CommentImageBase):
+    pass
+class CommentImage(CommentImageBase):
+    id:int
+    class Config:
+        from_attributes = True
